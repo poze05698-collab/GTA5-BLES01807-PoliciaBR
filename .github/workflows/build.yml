@@ -62,17 +62,28 @@ jobs:
           echo "/usr/local/ps3dev/ppu/bin" >> $GITHUB_PATH
           echo "/usr/local/ps3dev/spu/bin" >> $GITHUB_PATH
 
-      - name: Verificar PS3DEV
+      - name: Verificar toolchain
         run: |
-          echo "PS3DEV=$PS3DEV"
-          echo "PSL1GHT=$PSL1GHT"
-          echo "Localizando ppu-gcc..."
           which ppu-gcc
-          echo "Versao do PPU GCC:"
           ppu-gcc --version
+          test -f "$PSL1GHT/ppu_rules"
+          echo "PSL1GHT encontrado."
 
-      - name: Verificar estrutura do projeto
+      - name: Compilar projeto PS3
         run: |
-          echo "Projeto Policia BR"
-          echo "GTA V PS3 BLES01807"
-          find . -type f | sort
+          make clean || true
+          make
+
+      - name: Mostrar arquivos gerados
+        run: |
+          echo "Arquivos PS3 gerados:"
+          find . -maxdepth 2 -type f \( -name "*.elf" -o -name "*.self" \) -print
+
+      - name: Publicar executaveis
+        uses: actions/upload-artifact@v4
+        with:
+          name: PoliciaBR-PS3
+          path: |
+            policia_br.elf
+            policia_br.self
+          if-no-files-found: error
