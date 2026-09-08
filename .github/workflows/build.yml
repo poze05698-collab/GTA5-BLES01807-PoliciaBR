@@ -1,0 +1,31 @@
+name: Build Policia BR
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Verificar estrutura
+        run: |
+          echo "Projeto Policia BR"
+          echo "GTA V PS3 BLES01807"
+          echo "Arquivos encontrados:"
+          find . -type f | sort
+
+      - name: Preparar ambiente
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++
+
+      - name: Compilar teste
+        run: |
+          make
