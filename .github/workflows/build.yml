@@ -93,6 +93,18 @@ jobs:
           make clean || true
           make VERBOSE=1 policia_br.self
 
+      - name: Testar sprxlinker
+        run: |
+          echo "=== TESTE SPRXLINKER ==="
+          sprxlinker policia_br.elf || true
+
+          echo "=== ARQUIVOS APOS SPRXLINKER ==="
+          find . -maxdepth 2 -type f \( \
+            -name "*.elf" -o \
+            -name "*.sprx" -o \
+            -name "*.prx" \
+          \) -print
+
       - name: Mostrar arquivos gerados
         run: |
           echo "=== ARQUIVOS PS3 GERADOS ==="
