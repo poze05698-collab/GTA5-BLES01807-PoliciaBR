@@ -7,6 +7,14 @@ namespace Menu
     void Show();
     void Update();
     void Close();
+
+    void MainMenu();
+    void PoliceMenu();
+    void OperationsMenu();
+    void VehicleMenu();
+    void EquipmentMenu();
+    void CallsMenu();
+    void RankMenu();
 }
 
 #endif
