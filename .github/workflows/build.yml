@@ -65,11 +65,12 @@ jobs:
       - name: Verificar toolchain
         run: |
           which ppu-gcc
+          which ppu-g++
           ppu-gcc --version
           test -f "$PSL1GHT/ppu_rules"
           echo "PSL1GHT encontrado."
 
-            - name: Verificar ferramentas PS3
+      - name: Verificar ferramentas PS3
         run: |
           echo "=== COMPILADOR PPU ==="
           which ppu-gcc
@@ -87,15 +88,13 @@ jobs:
 
       - name: Compilar projeto PS3
         run: |
-          
-        run: |
           make clean || true
-          make
+          make VERBOSE=1 policia_br.self
 
       - name: Mostrar arquivos gerados
         run: |
           echo "Arquivos PS3 gerados:"
-          find . -maxdepth 2 -type f \( -name "*.elf" -o -name "*.self" \) -print
+          find . -type f \( -name "*.o" -o -name "*.elf" -o -name "*.self" \) -print
 
       - name: Publicar executaveis
         uses: actions/upload-artifact@v4
