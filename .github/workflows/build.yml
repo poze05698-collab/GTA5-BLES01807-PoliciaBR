@@ -14,18 +14,55 @@ jobs:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
-      - name: Verificar estrutura
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            autoconf \
+            automake \
+            bison \
+            flex \
+            gcc \
+            g++ \
+            libelf-dev \
+            make \
+            texinfo \
+            libncurses5-dev \
+            patch \
+            python3 \
+            subversion \
+            wget \
+            zlib1g-dev \
+            libtool \
+            libtool-bin \
+            bzip2 \
+            libgmp-dev \
+            pkg-config \
+            libssl-dev \
+            clang
+
+      - name: Baixar PS3DEV
+        run: |
+          git clone --depth 1 https://github.com/ps3dev/ps3dev.git /tmp/ps3dev
+
+      - name: Preparar PS3DEV
+        run: |
+          cd /tmp/ps3dev
+          sudo ./prepare.sh
+
+      - name: Verificar PS3DEV
+        run: |
+          export PS3DEV=/usr/local/ps3dev
+          export PSL1GHT=$PS3DEV
+          export PATH=$PATH:$PS3DEV/bin:$PS3DEV/ppu/bin:$PS3DEV/spu/bin
+
+          echo "PS3DEV=$PS3DEV"
+          echo "PSL1GHT=$PSL1GHT"
+
+          ppu-gcc --version
+
+      - name: Verificar estrutura do projeto
         run: |
           echo "Projeto Policia BR"
           echo "GTA V PS3 BLES01807"
-          echo "Arquivos encontrados:"
           find . -type f | sort
-
-      - name: Preparar ambiente
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y g++
-
-      - name: Compilar teste
-        run: |
-          make
