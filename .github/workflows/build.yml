@@ -39,26 +39,36 @@ jobs:
             libgmp-dev \
             pkg-config \
             libssl-dev \
-            clang
+            clang \
+            xz-utils
 
       - name: Baixar PS3DEV
         run: |
-          git clone --depth 1 https://github.com/ps3dev/ps3dev.git /tmp/ps3dev
+          wget -O /tmp/ps3dev.tar.gz \
+            https://github.com/ps3dev/ps3dev/releases/download/nightly-2026-07-26/ps3dev-linux-X64.tar.gz
 
-      - name: Preparar PS3DEV
+      - name: Instalar PS3DEV
         run: |
-          cd /tmp/ps3dev
-          sudo ./prepare.sh
+          sudo mkdir -p /usr/local/ps3dev
+          sudo tar -xzf /tmp/ps3dev.tar.gz \
+            -C /usr/local/ps3dev \
+            --strip-components=1
+
+      - name: Configurar ambiente PS3
+        run: |
+          echo "PS3DEV=/usr/local/ps3dev" >> $GITHUB_ENV
+          echo "PSL1GHT=/usr/local/ps3dev" >> $GITHUB_ENV
+          echo "/usr/local/ps3dev/bin" >> $GITHUB_PATH
+          echo "/usr/local/ps3dev/ppu/bin" >> $GITHUB_PATH
+          echo "/usr/local/ps3dev/spu/bin" >> $GITHUB_PATH
 
       - name: Verificar PS3DEV
         run: |
-          export PS3DEV=/usr/local/ps3dev
-          export PSL1GHT=$PS3DEV
-          export PATH=$PATH:$PS3DEV/bin:$PS3DEV/ppu/bin:$PS3DEV/spu/bin
-
           echo "PS3DEV=$PS3DEV"
           echo "PSL1GHT=$PSL1GHT"
-
+          echo "Localizando ppu-gcc..."
+          which ppu-gcc
+          echo "Versao do PPU GCC:"
           ppu-gcc --version
 
       - name: Verificar estrutura do projeto
