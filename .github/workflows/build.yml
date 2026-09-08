@@ -69,7 +69,25 @@ jobs:
           test -f "$PSL1GHT/ppu_rules"
           echo "PSL1GHT encontrado."
 
+            - name: Verificar ferramentas PS3
+        run: |
+          echo "=== COMPILADOR PPU ==="
+          which ppu-gcc
+          which ppu-g++
+
+          echo "=== FERRAMENTAS PS3 ==="
+          which sprxlinker || true
+          which fself || true
+          which make_self || true
+          which make_self_npdrm || true
+
+          echo "=== VERSÕES ==="
+          ppu-gcc --version
+          sprxlinker --help || true
+
       - name: Compilar projeto PS3
+        run: |
+          
         run: |
           make clean || true
           make
