@@ -70,7 +70,7 @@ jobs:
           test -f "$PSL1GHT/ppu_rules"
           echo "PSL1GHT encontrado."
 
-      - name: Verificar ferramentas PS3
+            - name: Verificar ferramentas PS3
         run: |
           echo "=== COMPILADOR PPU ==="
           which ppu-gcc
@@ -84,7 +84,9 @@ jobs:
 
           echo "=== VERSÕES ==="
           ppu-gcc --version
-          sprxlinker --help || true
+
+          echo "=== SPRXLINKER ==="
+          sprxlinker || true
 
       - name: Compilar projeto PS3
         run: |
