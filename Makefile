@@ -36,6 +36,12 @@ all: $(TARGET).self
 # Inclui as regras oficiais do PSL1GHT
 include $(PSL1GHT)/ppu_rules
 
+# Forçar o linker do PS3DEV
+CC := $(PS3DEV)/ppu/bin/ppu-gcc
+CXX := $(PS3DEV)/ppu/bin/ppu-g++
+LD := $(PS3DEV)/ppu/bin/ppu-gcc
+AR := $(PS3DEV)/ppu/bin/ppu-ar
+
 # Pacote opcional
 pkg: $(TARGET).pkg
 
