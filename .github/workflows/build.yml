@@ -56,11 +56,11 @@ jobs:
 
       - name: Configurar ambiente PS3
         run: |
-          echo "PS3DEV=/usr/local/ps3dev" >> $GITHUB_ENV
-          echo "PSL1GHT=/usr/local/ps3dev" >> $GITHUB_ENV
-          echo "/usr/local/ps3dev/bin" >> $GITHUB_PATH
-          echo "/usr/local/ps3dev/ppu/bin" >> $GITHUB_PATH
-          echo "/usr/local/ps3dev/spu/bin" >> $GITHUB_PATH
+          echo "PS3DEV=/usr/local/ps3dev" >> "$GITHUB_ENV"
+          echo "PSL1GHT=/usr/local/ps3dev" >> "$GITHUB_ENV"
+          echo "/usr/local/ps3dev/bin" >> "$GITHUB_PATH"
+          echo "/usr/local/ps3dev/ppu/bin" >> "$GITHUB_PATH"
+          echo "/usr/local/ps3dev/spu/bin" >> "$GITHUB_PATH"
 
       - name: Verificar toolchain
         run: |
@@ -70,7 +70,7 @@ jobs:
           test -f "$PSL1GHT/ppu_rules"
           echo "PSL1GHT encontrado."
 
-            - name: Verificar ferramentas PS3
+      - name: Verificar ferramentas PS3
         run: |
           echo "=== COMPILADOR PPU ==="
           which ppu-gcc
@@ -82,7 +82,7 @@ jobs:
           which make_self || true
           which make_self_npdrm || true
 
-          echo "=== VERSÕES ==="
+          echo "=== VERSAO DO COMPILADOR ==="
           ppu-gcc --version
 
           echo "=== SPRXLINKER ==="
@@ -95,8 +95,12 @@ jobs:
 
       - name: Mostrar arquivos gerados
         run: |
-          echo "Arquivos PS3 gerados:"
-          find . -type f \( -name "*.o" -o -name "*.elf" -o -name "*.self" \) -print
+          echo "=== ARQUIVOS PS3 GERADOS ==="
+          find . -type f \( \
+            -name "*.o" -o \
+            -name "*.elf" -o \
+            -name "*.self" \
+          \) -print
 
       - name: Publicar executaveis
         uses: actions/upload-artifact@v4
