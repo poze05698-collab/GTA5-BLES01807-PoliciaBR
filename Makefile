@@ -25,17 +25,23 @@ OFILES := \
 	police/uniform.o \
 	police/rank.o
 
-INCLUDE := -Iinclude
-
-CXXFLAGS := -std=c++11 -Wall $(INCLUDE)
+CXXFLAGS := -std=c++11 -Wall -Iinclude
 
 TITLE := Policia BR
 APPID := POLI00001
 
+# Alvo principal
+all: $(TARGET).self
+
+# Inclui as regras oficiais do PSL1GHT
 include $(PSL1GHT)/ppu_rules
+
+# Pacote opcional
+pkg: $(TARGET).pkg
 
 clean:
 	rm -f $(OFILES)
 	rm -f $(TARGET).elf
 	rm -f $(TARGET).self
 	rm -f $(TARGET).pkg
+	rm -rf build
