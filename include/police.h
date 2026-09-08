@@ -28,6 +28,7 @@ namespace Police
 
     void Radio();
     void Uniform();
+    void PoliceStations();
 
     void RankSystem();
 }
