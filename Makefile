@@ -1,41 +1,41 @@
-NAME := policia_br
+# ---------------------------------------------------------
+# Policia BR - GTA V PS3 BLES01807
+# ---------------------------------------------------------
 
-CXX := g++
+TARGET := policia_br
 
-CXXFLAGS := -std=c++11 -Wall -Wextra
+OFILES := \
+	source/main.o \
+	source/menu.o \
+	source/input.o \
+	police/service.o \
+	police/vehicles.o \
+	police/weapons.o \
+	police/approach.o \
+	police/pursuit.o \
+	police/arrest.o \
+	police/fine.o \
+	police/wanted.o \
+	police/calls.o \
+	police/radio.o \
+	police/backup.o \
+	police/operations.o \
+	police/favela.o \
+	police/stations.o \
+	police/uniform.o \
+	police/rank.o
 
-INCLUDES := -Iinclude
+INCLUDE := -Iinclude
 
-SOURCES := \
-	source/main.cpp \
-	source/menu.cpp \
-	source/input.cpp \
-	police/service.cpp \
-	police/vehicles.cpp \
-	police/weapons.cpp \
-	police/approach.cpp \
-	police/pursuit.cpp \
-	police/arrest.cpp \
-	police/fine.cpp \
-	police/wanted.cpp \
-	police/calls.cpp \
-	police/radio.cpp \
-	police/backup.cpp \
-	police/operations.cpp \
-	police/favela.cpp \
-	police/stations.cpp \
-	police/uniform.cpp \
-	police/rank.cpp
+CXXFLAGS := -std=c++11 -Wall $(INCLUDE)
 
-OBJECTS := $(SOURCES:.cpp=.o)
+TITLE := Policia BR
+APPID := POLI00001
 
-all: $(NAME)
-
-$(NAME): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(NAME)
-
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+include $(PSL1GHT)/ppu_rules
 
 clean:
-	rm -f $(OBJECTS) $(NAME)
+	rm -f $(OFILES)
+	rm -f $(TARGET).elf
+	rm -f $(TARGET).self
+	rm -f $(TARGET).pkg
